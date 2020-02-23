@@ -2,10 +2,10 @@
 
 from __future__ import annotations
 from math import floor
-from babel.numbers import format_currency
-from re import sub
 from decimal import Decimal, ROUND_HALF_EVEN
+from re import sub
 import operator
+from babel.numbers import format_currency
 
 
 class Money:
@@ -24,7 +24,6 @@ class Money:
         """
         Return new money object using the given amount
         """
-
         self.__assert_amount(amount)
 
         return self.__class__(amount)
@@ -43,7 +42,6 @@ class Money:
         """
         Return new money object instantiated from a float value
         """
-
         if not isinstance(amount, float):
             raise ValueError("Amount must be a float")
 
@@ -54,7 +52,6 @@ class Money:
         """
         Return new money object instantiated from a string currency value
         """
-
         if not isinstance(currency_str, str):
             raise ValueError("Amount must be a string")
 
@@ -82,7 +79,6 @@ class Money:
         """
         Return money amount
         """
-
         return self.__amount
 
     def __add__(self, other) -> Money:
@@ -90,7 +86,6 @@ class Money:
         Return a new money object that amounts to
         sum of this object and given money object
         """
-
         if isinstance(other, Money):
             return self.__class__(self.amount + other.amount)
 
@@ -102,7 +97,6 @@ class Money:
         Return a new money object that amounts to
         sum of this object and given money object
         """
-
         return self.__add__(other)
 
     def __sub__(self, other) -> Money:
@@ -110,7 +104,6 @@ class Money:
         Return a new money object that amounts to
         difference of this object and given money object
         """
-
         if isinstance(other, Money):
             return self.__class__(self.amount - other.amount)
 
@@ -122,7 +115,6 @@ class Money:
         Return a new money object that amounts to
         difference of this object and given money object
         """
-
         return (-self).__add__(other)
 
     def __mul__(self, factor: (int, float)) -> Money:
@@ -130,7 +122,6 @@ class Money:
         Return a new money object that amounts to
         product of this object and given money object
         """
-
         self.__assert_operand(factor)
 
         return self.__class__(round(self.amount * factor))
@@ -140,7 +131,6 @@ class Money:
         Return a new money object that amounts to
         product of this object and given money object
         """
-
         return self.__mul__(factor)
 
     def __truediv__(self, other) -> Money:
@@ -148,7 +138,6 @@ class Money:
         Return a new money object that amounts to
         quotient of this object and given money object
         """
-
         if isinstance(other, Money):
             if other.amount == 0:
                 raise ZeroDivisionError()
@@ -164,7 +153,6 @@ class Money:
         Return a new money object that amounts to
         quotient of this object and given money object
         """
-
         if isinstance(other, Money):
             if other.amount == 0:
                 raise ZeroDivisionError()
@@ -180,7 +168,6 @@ class Money:
         Check if given money object value
         and currency matches this object
         """
-
         if isinstance(other, Money):
             return self.amount == other.amount
 
@@ -192,7 +179,6 @@ class Money:
         Check if object amount is
         greater than given money amount
         """
-
         return self.__compare(other, operator.gt)
 
     def __ge__(self, other) -> bool:
@@ -200,7 +186,6 @@ class Money:
         Check if object amount is greater
         or if it equals to given money amount
         """
-
         return self.__compare(other, operator.ge)
 
     def __lt__(self, other) -> bool:
@@ -215,7 +200,6 @@ class Money:
         Check if object amount is less or
         if it equals to given money amount
         """
-
         return self.__compare(other, operator.le)
 
     def __compare(self, other, comparison_operator) -> bool:
@@ -223,7 +207,6 @@ class Money:
         Compare object amount to given money
         amount using the provided comparison operator
         """
-
         if isinstance(other, Money):
             return comparison_operator(self.amount, other.amount)
 
@@ -234,7 +217,6 @@ class Money:
         """
         Return a new money object with a rounded amount
         """
-
         decimal_value = Decimal(self.amount / 100)
         quantized_value = decimal_value.quantize(exp=Decimal(1.00),
                                                  rounding=ROUND_HALF_EVEN)
@@ -252,26 +234,22 @@ class Money:
         """
         Return a float representation of a money object
         """
-
         return round(self.amount / 100, 2)
 
     def __neg__(self):
         """
         Return a new money object with a negative amount
         """
-
         return self.__class__(-self.amount)
 
     def __pos__(self):
         """
         Return a new money object with a positive amount
         """
-
         return self.__class__(+self.amount)
 
     def __abs__(self):
         """
         Return a new money object with an absolute value of the amount
         """
-
         return self.__class__(abs(self.amount))
