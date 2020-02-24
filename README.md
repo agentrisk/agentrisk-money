@@ -5,3 +5,4 @@ Python class for working with money, following [Martin Fowler's money pattern](h
 Influenced by https://github.com/carlospalol/money and https://github.com/luka-mladenovic/fowlers-money.
 
 Currently only supports USD as currency.
+
