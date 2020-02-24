@@ -1,5 +1,5 @@
 from decimal import Decimal
-from src.money import Money
+from money import Money
 import pytest
 
 
